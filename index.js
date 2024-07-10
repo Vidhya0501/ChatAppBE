@@ -6,7 +6,7 @@ const userRoutes = require("./src/routes/userRoutes.js");
 const chatRoutes = require("./src/routes/chatRoutes.js");
 const messageRoutes = require("./src/routes/messageRoutes.js");
 const { notFound, errorHandler } = require("./src/middleware/errorMiddleware.js");
-
+const path = require("path");
 
 dotenv.config();
 connectDB();
@@ -19,13 +19,27 @@ app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
 
+const __dirname1 = path.resolve();
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "../ChatAppFE/dist")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname1, "C:\Users\Muthu\Desktop\Vidhya\GUVI-FSD(MERN)\OwnProjects\ChatApp\ChatAppFE\dist\index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is running..");
+  });
+}
 
 // Error Handling middlewares
 app.use(notFound);
 app.use(errorHandler);
 
 const PORT = process.env.PORT;
+
+
 
 const server = app.listen(
   PORT,
@@ -35,7 +49,7 @@ const server = app.listen(
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "http://localhost:5173",
+    origin: "http://localhost:8000",
      credentials: true,
   },
 });

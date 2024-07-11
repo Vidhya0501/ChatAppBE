@@ -22,10 +22,10 @@ app.use("/api/message", messageRoutes);
 const __dirname1 = path.resolve();
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname1, "../ChatAppFE/dist")));
+  app.use(express.static(path.join(__dirname1, "/ChatAppFE/dist")));
 
   app.get("*", (req, res) =>
-    res.sendFile(path.resolve(__dirname1, "C:\Users\Muthu\Desktop\Vidhya\GUVI-FSD(MERN)\OwnProjects\ChatApp\ChatAppFE\dist\index.html"))
+    res.sendFile(path.resolve(__dirname1, "ChatAppFE", "dist", "index.html"))
   );
 } else {
   app.get("/", (req, res) => {
@@ -49,7 +49,7 @@ const server = app.listen(
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "http://localhost:8000",
+    origin: "http://localhost:5173",
      credentials: true,
   },
 });

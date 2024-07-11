@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "prod": "node index.js"
+    "build": "npm install --legacy-peer-deps && npm install --legacy-peer-deps --prefix ChatAppFE && npm run build --prefix ChatAppFE"
   },
   "keywords": [],
   "author": "",
